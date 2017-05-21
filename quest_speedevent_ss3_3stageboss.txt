@@ -9,6 +9,7 @@ var #stages 3
 var #attacktimeframe 5
 var #attackdelay 200
 var #actionwaitlong 4500
+var #actionwaitmediumlong 3000
 var #actionwaitmedium 2000
 var #actionwaitshort 500
 var #checkwait 250
@@ -252,20 +253,28 @@ touchMove 0 966 1793
 sleep 11
 touchUp 0
 
-sleep #actionwaitlong
+sleep #actionwaitmedium
 
 :checkloading
 getColor #color #clloadingX #clloadingY
 if #color == #clloadingC
     #countloading = #countloading + 1
-    toast [BOT] Entering Stage #countloading
-    sleep #actionwaitlong
+    toast Entering Stage #countloading
+    :checkloadingfinish
+    getColor #color #clloadingX #clloadingY
+    if #color == #clloadingC
+        sleep #checkwait
+        goto :checkloadingfinish
+    endif
 endif
 if #countloading >= #stages
     #countloading = 0
     goto :attackss3
-else
+elseif #countloading > 0
     goto :attack
+else
+    sleep #checkwait
+    goto :checkloading
 endif
 
 :attack
