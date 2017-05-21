@@ -1,0 +1,7 @@
+DEVICE:SM-G928I 6.0.1
+SCREEN_SIZE: 1440x2560 (softkey)
+
+:start
+
+
+:end
