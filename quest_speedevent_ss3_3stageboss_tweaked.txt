@@ -2,7 +2,7 @@ DEVICE:SM-G928I 6.0.1
 SCREEN_SIZE: 1440x2560 (softkey)
 
 // Run on results page
-// Infinity, 7 seconds interval
+// Infinity, 0 seconds interval
 
 var #stages 3
 
@@ -83,13 +83,6 @@ var #countloading 0
 :start
 
 sleep #actionwaitshort
-
-:checkresults
-getColor #color #clresultsX #clresultsY
-if #color != #clresultsC
-    sleep #checkwait
-    goto :checkresults
-endif
 
 touchDown 0 715 2397
 sleep 9
@@ -292,7 +285,7 @@ goto :attack
 :attackss3
 if #count > #attacktimeframe
     #count = 0
-    goto :checkcongrats
+    goto :checkend
 endif
 touchDown 0 #btss3X #btss3Y
 sleep 50
@@ -301,12 +294,11 @@ sleep #attackdelay
 #count = #count + 1
 goto :attackss3
 
-:checkcongrats
-getColor #color #clcongrats1X #clcongrats1Y
-if #color != #clcongrats1C
-   goto :attackss3
+:checkend
+getColor #color #clresultsX #clresultsY
+if #color != #clresultsC
+    sleep #checkwait
+    goto :attackss3
 endif
-
-toast Lel Easy Game ~
 
 :end

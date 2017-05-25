@@ -2,9 +2,9 @@ DEVICE:SM-G928I 6.0.1
 SCREEN_SIZE: 1440x2560 (softkey)
 
 // Run on results page
-// Infinity, 7 seconds interval
+// Infinity, 0 seconds interval
 
-var #stages 3
+var #stages 2
 
 var #attacktimeframe 4
 var #attackdelay 200
@@ -84,173 +84,72 @@ var #countloading 0
 
 sleep #actionwaitshort
 
-:checkresults
-getColor #color #clresultsX #clresultsY
-if #color != #clresultsC
-    sleep #checkwait
-    goto :checkresults
-endif
-
-touchDown 0 715 2397
-sleep 9
-touchMove 0 714 2397
-sleep 11
-touchMove 0 713 2396
+touchDown 0 712 2399
 sleep 10
-touchMove 0 712 2396
-sleep 12
-touchMove 0 710 2397
-sleep 8
+touchMove 0 713 2399
+sleep 31
+touchMove 0 712 2400
+sleep 30
 touchUp 0
-sleep 693
-touchDown 0 729 1998
-sleep 27
-touchMove 0 728 1999
-sleep 11
-touchMove 0 727 2000
+sleep 5500
+touchDown 0 714 2383
+sleep 7
+touchMove 0 713 2383
+sleep 10
+touchMove 0 712 2382
+sleep 10
+touchMove 0 711 2381
+sleep 10
+touchMove 0 709 2381
+sleep 10
+touchMove 0 706 2381
 sleep 10
 touchUp 0
-sleep 393
-touchDown 0 736 1854
-sleep 8
-touchMove 0 737 1854
-sleep 10
-touchMove 0 738 1853
-sleep 10
-touchMove 0 738 1852
-sleep 10
-touchMove 0 737 1850
-sleep 11
-touchMove 0 736 1847
-sleep 11
-touchMove 0 735 1844
-sleep 8
-touchUp 0
-sleep 254
-touchDown 0 739 1835
-sleep 9
-touchMove 0 738 1835
-sleep 10
-touchMove 0 737 1834
-sleep 11
-touchMove 0 736 1833
-sleep 11
-touchMove 0 735 1832
-sleep 9
-touchMove 0 734 1831
-sleep 11
-touchMove 0 735 1830
-sleep 10
-touchUp 0
-sleep 137
-touchDown 0 748 1793
-sleep 6
-touchMove 0 747 1792
-sleep 11
-touchMove 0 746 1791
-sleep 10
-touchMove 0 745 1790
-sleep 10
-touchMove 0 743 1789
-sleep 11
-touchMove 0 741 1787
-sleep 10
-touchUp 0
-sleep 221
-touchDown 0 740 1840
-sleep 10
-touchMove 0 739 1840
-sleep 9
-touchMove 0 738 1839
-sleep 11
-touchMove 0 737 1838
-sleep 10
-touchMove 0 736 1838
-sleep 11
-touchMove 0 735 1838
-sleep 10
-touchUp 0
-sleep 4623
-touchDown 0 720 2377
-sleep 8
-touchMove 0 719 2377
-sleep 10
-touchMove 0 718 2378
-sleep 11
-touchMove 0 717 2379
-sleep 12
-touchMove 0 716 2380
-sleep 8
-touchUp 0
-sleep 1605
-touchDown 0 743 1679
+sleep 2315
+touchDown 0 726 1680
 sleep 19
-touchMove 0 742 1678
+touchMove 0 726 1679
 sleep 10
-touchMove 0 741 1677
+touchMove 0 727 1678
+sleep 10
+touchMove 0 728 1678
 sleep 11
-touchMove 0 740 1676
-sleep 10
-touchMove 0 738 1675
+touchMove 0 729 1678
 sleep 10
 touchUp 0
-sleep 342
-touchDown 0 713 1683
-sleep 4
-touchMove 0 713 1682
+sleep 2641
+touchDown 0 706 1770
+sleep 9
+touchMove 0 705 1769
+sleep 11
+touchUp 0
+sleep 928
+touchDown 0 1199 2448
 sleep 12
-touchMove 0 713 1681
-sleep 9
-touchMove 0 712 1680
-sleep 11
-touchMove 0 711 1679
-sleep 11
-touchMove 0 711 1678
-sleep 9
-touchUp 0
-sleep 156
-touchDown 0 726 1666
-sleep 9
-touchMove 0 725 1666
-sleep 11
-touchMove 0 724 1665
-sleep 10
-touchMove 0 723 1664
-sleep 11
-touchUp 0
-sleep 1856
-touchDown 0 731 1817
-sleep 4
-touchMove 0 730 1816
-sleep 10
-touchMove 0 729 1815
-sleep 10
-touchMove 0 727 1813
-sleep 11
-touchMove 0 725 1810
-sleep 9
-touchUp 0
-sleep 392
-touchDown 0 1145 2443
-sleep 19
-touchMove 0 1146 2444
-sleep 10
-touchUp 0
-sleep 544
-touchDown 0 967 1782
-sleep 9
-touchMove 0 966 1782
+touchMove 0 1198 2448
 sleep 8
-touchMove 0 965 1781
+touchMove 0 1197 2449
 sleep 11
-touchMove 0 964 1780
+touchMove 0 1196 2449
+sleep 20
+touchMove 0 1196 2448
+sleep 21
+touchMove 0 1196 2447
 sleep 10
-touchMove 0 965 1780
-sleep 11
-touchMove 0 967 1782
+touchMove 0 1197 2446
+sleep 10
+touchUp 0
+sleep 792
+touchDown 0 1022 1797
+sleep 20
+touchMove 0 1021 1796
 sleep 9
-touchMove 0 966 1793
+touchMove 0 1020 1795
 sleep 11
+touchMove 0 1019 1794
+sleep 10
+touchMove 0 1018 1793
+sleep 10
 touchUp 0
 
 sleep #actionwaitmedium
@@ -292,7 +191,7 @@ goto :attack
 :attackss3
 if #count > #attacktimeframe
     #count = 0
-    goto :checkcongrats
+    goto :checkend
 endif
 touchDown 0 #btss3X #btss3Y
 sleep 50
@@ -301,12 +200,11 @@ sleep #attackdelay
 #count = #count + 1
 goto :attackss3
 
-:checkcongrats
-getColor #color #clcongrats1X #clcongrats1Y
-if #color != #clcongrats1C
-   goto :attackss3
+:checkend
+getColor #color #clresultsX #clresultsY
+if #color != #clresultsC
+    sleep #checkwait
+    goto :attackss3
 endif
-
-toast Lel Easy Game ~
 
 :end
