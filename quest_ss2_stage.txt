@@ -1,0 +1,213 @@
+DEVICE:SM-G928I 6.0.1
+SCREEN_SIZE: 1440x2560 (softkey)
+
+// Run on results page
+// Infinity, 0 seconds interval
+
+var #stages 3
+
+var #attacktimeframe 4
+var #attackdelay 200
+var #actionwaitlong 4500
+var #actionwaitmediumlong 3000
+var #actionwaitmedium 2000
+var #actionwaitshort 500
+var #checkwait 250
+
+var #clcongrats1X 400
+var #clcongrats1Y 940
+var #clcongrats1C 16777215
+var #clcongrats2X 1120
+var #clcongrats2Y 940
+var #clcongrats2C 16777215
+var #clcongrats3X 360
+var #clcongrats3Y 270
+var #clcongrats3C 16777215
+
+var #clresultsX 736
+var #clresultsY 2387
+var #clresultsC 12550204
+
+var #clexpX 720
+var #clexpY 2375
+var #clexpC 12550204
+
+var #clchestX 721
+var #clchestY 1411
+var #clchestC 715552
+
+var #clgetitemX 720
+var #clgetitemY 1757
+var #clgetitemC 12550204
+
+var #clretryX 1075
+var #clretryY 2446
+var #clretryC 10581296
+
+var #clconfirmX 1020
+var #clconfirmY 1830
+var #clconfirmC 12550204
+
+var #clloadingX 350
+var #clloadingY 1800
+var #clloadingC 0
+
+var #btattackX 1170
+var #btattackY 1940
+
+var #btss2X 300
+var #btss2Y 1814
+
+var #btresultsX 720
+var #btresultsY 2375
+
+var #btexpX 720
+var #btexpY 2375
+
+var #btchestX 720
+var #btchestY 1660
+
+var #btgetitemX 720
+var #btgetitemY 1757
+
+var #btretryX 1075
+var #btretryY 2446
+
+var #btconfirmX 1020
+var #btconfirmY 1830
+
+var #color 0
+var #count 0
+var #countloading 0
+
+:start
+
+sleep #actionwaitshort
+
+touchDown 0 712 2399
+sleep 10
+touchMove 0 713 2399
+sleep 31
+touchMove 0 712 2400
+sleep 30
+touchUp 0
+sleep 5500
+touchDown 0 714 2383
+sleep 7
+touchMove 0 713 2383
+sleep 10
+touchMove 0 712 2382
+sleep 10
+touchMove 0 711 2381
+sleep 10
+touchMove 0 709 2381
+sleep 10
+touchMove 0 706 2381
+sleep 10
+touchUp 0
+sleep 2315
+touchDown 0 726 1680
+sleep 19
+touchMove 0 726 1679
+sleep 10
+touchMove 0 727 1678
+sleep 10
+touchMove 0 728 1678
+sleep 11
+touchMove 0 729 1678
+sleep 10
+touchUp 0
+sleep 2641
+touchDown 0 706 1770
+sleep 9
+touchMove 0 705 1769
+sleep 11
+touchUp 0
+sleep 928
+touchDown 0 1199 2448
+sleep 12
+touchMove 0 1198 2448
+sleep 8
+touchMove 0 1197 2449
+sleep 11
+touchMove 0 1196 2449
+sleep 20
+touchMove 0 1196 2448
+sleep 21
+touchMove 0 1196 2447
+sleep 10
+touchMove 0 1197 2446
+sleep 10
+touchUp 0
+sleep 792
+touchDown 0 1022 1797
+sleep 20
+touchMove 0 1021 1796
+sleep 9
+touchMove 0 1020 1795
+sleep 11
+touchMove 0 1019 1794
+sleep 10
+touchMove 0 1018 1793
+sleep 10
+touchUp 0
+
+sleep #actionwaitmedium
+
+:checkloading
+getColor #color #clloadingX #clloadingY
+if #color == #clloadingC
+    #countloading = #countloading + 1
+    toast Entering Stage #countloading
+    :checkloadingfinish
+    getColor #color #clloadingX #clloadingY
+    if #color == #clloadingC
+        sleep #checkwait
+        goto :checkloadingfinish
+    endif
+elseif #color == #clresultsC
+    #countloading = 0
+    goto :end
+endif
+if #countloading >= #stages
+    #countloading = 0
+    goto :attackss2
+elseif #countloading > 0
+    goto :attack
+else
+    sleep #checkwait
+    goto :checkloading
+endif
+
+:attack
+if #count > #attacktimeframe
+    #count = 0
+    goto :checkloading
+endif
+touchDown 0 #btattackX #btattackY
+sleep 50
+touchUp 0
+sleep #attackdelay
+#count = #count + 1
+goto :attack
+
+:attackss2
+if #count > #attacktimeframe
+    #count = 0
+    goto :checkend
+endif
+touchDown 0 #btss2X #btss2Y
+sleep 50
+touchUp 0
+sleep #attackdelay
+#count = #count + 1
+goto :attackss2
+
+:checkend
+getColor #color #clresultsX #clresultsY
+if #color != #clresultsC
+    sleep #checkwait
+    goto :attackss2
+endif
+
+:end

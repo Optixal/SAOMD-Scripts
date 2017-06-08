@@ -1,15 +1,9 @@
 DEVICE:SM-G928I 6.0.1
 SCREEN_SIZE: 1440x2560 (softkey)
 
-// Run on results page
-// Infinity, 0 seconds interval
-
-var #stages 2
-
 var #attacktimeframe 4
 var #attackdelay 200
 var #actionwaitlong 4500
-var #actionwaitmediumlong 3000
 var #actionwaitmedium 2000
 var #actionwaitshort 500
 var #checkwait 250
@@ -48,15 +42,8 @@ var #clconfirmX 1020
 var #clconfirmY 1830
 var #clconfirmC 12550204
 
-var #clloadingX 350
-var #clloadingY 1800
-var #clloadingC 0
-
-var #btattackX 1170
-var #btattackY 1940
-
-var #btss2X 300
-var #btss2Y 1814
+var #btattackX 380
+var #btattackY 2040
 
 var #btresultsX 720
 var #btresultsY 2375
@@ -78,7 +65,6 @@ var #btconfirmY 1830
 
 var #color 0
 var #count 0
-var #countloading 0
 
 :start
 
@@ -152,34 +138,12 @@ touchMove 0 1018 1793
 sleep 10
 touchUp 0
 
-sleep #actionwaitmedium
-
-:checkloading
-getColor #color #clloadingX #clloadingY
-if #color == #clloadingC
-    #countloading = #countloading + 1
-    toast Entering Stage #countloading
-    :checkloadingfinish
-    getColor #color #clloadingX #clloadingY
-    if #color == #clloadingC
-        sleep #checkwait
-        goto :checkloadingfinish
-    endif
-endif
-if #countloading >= #stages
-    #countloading = 0
-    goto :attackss2
-elseif #countloading > 0
-    goto :attack
-else
-    sleep #checkwait
-    goto :checkloading
-endif
+sleep #actionwaitlong
 
 :attack
 if #count > #attacktimeframe
     #count = 0
-    goto :checkloading
+    goto :checkend
 endif
 touchDown 0 #btattackX #btattackY
 sleep 50
@@ -188,23 +152,11 @@ sleep #attackdelay
 #count = #count + 1
 goto :attack
 
-:attackss2
-if #count > #attacktimeframe
-    #count = 0
-    goto :checkend
-endif
-touchDown 0 #btss2X #btss2Y
-sleep 50
-touchUp 0
-sleep #attackdelay
-#count = #count + 1
-goto :attackss2
-
 :checkend
 getColor #color #clresultsX #clresultsY
 if #color != #clresultsC
     sleep #checkwait
-    goto :attackss2
+    goto :attack
 endif
 
 :end
